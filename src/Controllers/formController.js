@@ -77,7 +77,18 @@ async function updateForm(req, res) {
     formRepository.findByPk(req.params.id).then((result) => res.json(result));
 }
 
+async function deleteForm(req, res) {
+    try { 
+        await formRepository.destroy({
+            where: {
+                id: req.params.id,
+            },
+        });
+        res.json({ message: "Formulário deletado com sucesso!" });
+    } catch (error) {
+        res.status(500).json({ error: "Erro ao deletar o formulário." });
+    }
+}
 
 
-
-export default { findAll, findForm, addForm };
+export default { findAll, findForm, addForm, updateForm, deleteForm };
